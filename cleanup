@@ -1,0 +1,39 @@
+#! /bin/sh
+
+# Purges backups older than 'LIMIT' days down to one remaining backup
+# per week.
+
+LIMIT=7		# days back
+BACKUPDIR=/mnt/backup
+
+if [ ! -d "$BACKUPDIR" ]
+then
+    echo "Directory for backup is missing, exiting!" >&2
+    exit 1
+fi
+
+delete() {
+    for dir in $*
+    do
+        rm -fr $BACKUPDIR/$dir
+    done
+}
+
+DIRS=`find $BACKUPDIR -maxdepth 1 -type d -name 'back-*' | sed -e 's/.*\///' | sort -n`
+DATES=`echo "$DIRS" | sed -e 's/back-//' -e 's/T.*//' | sort -n | uniq | head -n -$LIMIT -`
+
+PREV=-1
+
+for i in $DATES
+do
+    WEEK=`date --date="$i" +%W`
+    if [ $WEEK = $PREV ]
+    then
+        # on day 2 to 7 delete all
+        delete `echo "$DIRS" | grep $i | grep "back-"`
+    else
+        # on day 1 delete all except the first
+        delete `echo "$DIRS" | grep $i | grep "back-" | tail -n +2`
+    fi
+    PREV=$WEEK
+done
