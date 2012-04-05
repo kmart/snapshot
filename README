@@ -1,0 +1,39 @@
+timemachine
+-----------
+
+Backup done in a 'Time Machine' like fashion.
+
+The scripts are heavily inspired by a similar setup described at:
+
+  http://blog.interlinked.org/tutorials/rsync_time_machine.html
+
+Scripts:
+
+  timemachine - backups your $HOME directory
+  cleanup     - purges old backups
+
+Configuration:
+
+  timemachine
+     Edit the script and set the HOME and BACKUPDIR variables as appropriate.
+
+  cleanup
+     Edit the script and set the BACKUPDIR and LIMIT variables as
+     appropriate.
+
+  The scripts should be run from cron, example:
+
+     $ crontab -l
+     0  7-20/2 * * 1-5 $HOME/bin/timemachine >> /tmp/backup.log  2>&1
+     0  2      * * 1   $HOME/bin/cleanup     >> /tmp/cleanup.log 2>&1
+
+Restore:
+
+  $ cp     (for single files)
+  $ rsync -avz --delete $BACKUPDIR/current/ $HOME/
+
+Check used space:
+
+  $ du -shc <dir>
+
+2012-01-01  <kmyksvo(at)online.no>

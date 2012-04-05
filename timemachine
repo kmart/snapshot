@@ -1,0 +1,32 @@
+#! /bin/sh
+
+# Backup done in a 'Time Machine' like fashion.
+#
+# Script taken from:
+# http://blog.interlinked.org/tutorials/rsync_time_machine.html
+#
+# Run from cron (each second hour from 7 to 20, mon-fri):
+#  $ crontab -e
+#  0 7-20/2 * * 1-5 $HOME/bin/timemachine >> /tmp/backup.log 2>&1
+#
+# Restore with:
+#  $ cp    (for single files)
+#  $ rsync -avz --delete $BACKUPDIR/current/ $HOME/
+#
+# Check space with:
+#  $ du -shc $BACKUPDIR/back-*
+
+date=`date "+%Y-%m-%dT%H:%M:%S"`
+
+HOME=/home/user
+BACKUPDIR=/mnt/backup
+
+if [ ! -d "$BACKUPDIR" ]
+then
+    echo "Directory for backup is missing, exiting!" >&2
+    exit 1
+fi
+
+rsync -qazPE --delete --delete-excluded --exclude-from=$HOME/.rsync/exclude --link-dest=$BACKUPDIR/current \
+    $HOME/ $BACKUPDIR/back-$date/ \
+    && rm -f $BACKUPDIR/current && ln -s $BACKUPDIR/back-$date $BACKUPDIR/current
