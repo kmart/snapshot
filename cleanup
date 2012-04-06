@@ -2,6 +2,7 @@
 
 # Purges backups older than 'LIMIT' days down to one remaining backup
 # per week.
+# License: public domain
 
 LIMIT=7		# days back
 BACKUPDIR=/mnt/backup
