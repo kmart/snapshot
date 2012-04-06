@@ -1,6 +1,7 @@
 #! /bin/sh
 
 # Backup done in a 'Time Machine' like fashion.
+# License: public domain
 #
 # Script taken from:
 # http://blog.interlinked.org/tutorials/rsync_time_machine.html
