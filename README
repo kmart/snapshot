@@ -1,7 +1,7 @@
-timemachine
------------
+snapshot
+--------
 
-Backup done in a 'Time Machine' like fashion.
+Backup done in a 'Time Machine' like fashion, using rsync.
 
 The scripts are heavily inspired by a similar setup described at:
 
@@ -9,12 +9,12 @@ The scripts are heavily inspired by a similar setup described at:
 
 Scripts:
 
-  timemachine - backups your $HOME directory
-  cleanup     - purges old backups
+  snapshot - makes backups of your $HOME directory
+  cleanup  - purges old backups
 
 Configuration:
 
-  timemachine
+  snapshot
      Edit the script and set the HOME and BACKUPDIR variables as appropriate.
 
   cleanup
@@ -24,8 +24,8 @@ Configuration:
   The scripts should be run from cron, example:
 
      $ crontab -l
-     0  7-20/2 * * 1-5 $HOME/bin/timemachine >> /tmp/backup.log  2>&1
-     0  2      * * 1   $HOME/bin/cleanup     >> /tmp/cleanup.log 2>&1
+     0  7-20/2 * * 1-5 $HOME/bin/snapshot >> /tmp/snapshot.log 2>&1
+     0  2      * * 1   $HOME/bin/cleanup  >> /tmp/cleanup.log  2>&1
 
 Restore:
 
@@ -36,4 +36,4 @@ Check used space:
 
   $ du -shc <dir>
 
-2012-01-01  <kmyksvo(at)online.no>
+2012-05-18  <kmyksvo(at)online.no>
