@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# Backup done in a 'Time Machine' like fashion.
+# Backup done in a 'Time Machine' like fashion, using rsync.
 # License: public domain
 #
 # Script taken from:
@@ -8,7 +8,7 @@
 #
 # Run from cron (each second hour from 7 to 20, mon-fri):
 #  $ crontab -e
-#  0 7-20/2 * * 1-5 $HOME/bin/timemachine >> /tmp/backup.log 2>&1
+#  0 7-20/2 * * 1-5 $HOME/bin/snapshot >> /tmp/snapshot.log 2>&1
 #
 # Restore with:
 #  $ cp    (for single files)
